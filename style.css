@@ -53,6 +53,9 @@ h1 {
   display: none;
 }
 @media screen and (max-width:1300px) {
+  .nav a {
+    font-size: 40px;
+  }
   #pages {
     flex-flow: column;
     align-items: flex-end;
