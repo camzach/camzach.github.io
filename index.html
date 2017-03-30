@@ -19,12 +19,9 @@
       </ul>
       <ul id="pages" class="active">
         <a href="javascript:$('#pages').toggleClass('open')" class="icon">≡</a>
-        <li><label><input type="radio" name="page" value="1" checked="checked"><span>Python</span></input></label></li>
-        <li><label><input type="radio" name="page" value="2"><span>Java</span></input></label></li>
-        <li><label><input type="radio" name="page" value="3"><span>Esoteric</span></input></label></li>
-        <li><label><input type="radio" name="page" value="4"><span>4</span></input></label></li>
-        <li><label><input type="radio" name="page" value="5"><span>5</span></input></label></li>
-        <li><label><input type="radio" name="page" value="6"><span>6</span></input></label></li>
+        <li><label><input type="radio" name="page" value="1" checked="checked"><span>About</span></input></label></li>
+        <li><label><input type="radio" name="page" value="2"><span>Python</span></input></label></li>
+        <li><label><input type="radio" name="page" value="3"><span>Java</span></input></label></li>
       </ul>
     </div>
   </header>
@@ -88,24 +85,6 @@
   
   <div class="container" id="3" style="margin-left: 150%">
     <div class="row">
-      <h1>Page 3</h1>
-    </div>
-  </div>
-  
-  <div class="container" id="4" style="margin-left: 150%">
-    <div class="row">
-      <h1>Page 4</h1>
-    </div>
-  </div>
-  
-  <div class="container" id="5" style="margin-left: 150%">
-    <div class="row">
-      <h1>Page 5</h1>
-    </div>
-  </div>
-  
-  <div class="container" id="6" style="margin-left: 150%">
-    <div class="row">
       <h1>Page 6</h1>
     </div>
   </div>
@@ -116,7 +95,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>
   <script>
     var pages = $("#slider").children().length;
-    var hammertime = new Hammer(document);
+    var hammertime = new Hammer(document, {
+      inputClass: Hammer.TouchInput
+    });
+    
     
     hammertime.on('swipeleft', function(ev) {swipe('left', ev)});
     hammertime.on('swiperight', function(ev) {swipe('right', ev)});
