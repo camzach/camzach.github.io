@@ -1,0 +1,77 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { getCollection } from "astro:content";
+import FormattedDate from "../components/FormattedDate.astro";
+
+const latestPost = (await getCollection("blog")).reduce((a, b) =>
+  a.data.pubDate > b.data.pubDate ? a : b
+);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      .latest-post {
+        width: calc(50% - 1rem);
+      }
+      .latest-post * {
+        text-decoration: none;
+        transition: 0.2s ease;
+      }
+      .latest-post img {
+        margin-bottom: 0.5rem;
+        border-radius: 12px;
+      }
+      .latest-post a {
+        display: block;
+      }
+      .title {
+        margin: 0;
+        color: rgb(var(--black));
+        line-height: 1;
+      }
+      .date {
+        margin: 0;
+        color: rgb(var(--gray));
+      }
+      .latest-post a:hover h4,
+      .latest-post a:hover .date {
+        color: rgb(var(--accent));
+      }
+      .latest-post a:hover img {
+        box-shadow: var(--box-shadow);
+      }
+    </style>
+  </head>
+  <body>
+    <Header title={SITE_TITLE} />
+    <main>
+      <h1>Hey there!</h1>
+      <p>
+        Welcome to my portfolio / blog / dumpster. This is where I'll post
+        things that I'm learning, working on, or just plain proud of. Why not
+        get started with my latest blog post?
+      </p>
+      <div class="latest-post">
+        <a href={`/blog/${latestPost.slug}/`}>
+          <img
+            width={720}
+            height={360}
+            src={latestPost.data.heroImage}
+            alt=""
+          />
+          <h4 class="title">{latestPost.data.title}</h4>
+          <p class="date">
+            <FormattedDate date={latestPost.data.pubDate} />
+          </p>
+        </a>
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html>
