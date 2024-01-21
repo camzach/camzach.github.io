@@ -129,3 +129,7 @@ while !grid.solved() {
 ```
 
 An added bonus is that I can now add the strategies in whatever order I want. If for some reason I want to try chess strategies before I do any basic Sudoku strategies, I'm free to decide that at runtime!
+
+To finish up the project (for now), I used the `log` crate to add some visibility into the solving process, and `clap` to create a pretty command line utility. Overall, I'm very happy with where the project has ended up. I got in a lot of (somewhat) practical experience working with the borrow checker, I learned how to read and understand Rust's _very_ helpful compiler diagnostics, and I became more confident overall in my ability to code in Rust.
+
+If you're interested, you can check out the project [here](https://github.com/camzach/sudoku_rs)!
