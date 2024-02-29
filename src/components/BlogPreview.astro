@@ -1,0 +1,48 @@
+---
+import type { CollectionEntry } from "astro:content";
+import FormattedDate from "./FormattedDate.astro";
+
+type Props = CollectionEntry<"blog">;
+const post = Astro.props;
+---
+
+<style>
+  * {
+    text-decoration: none;
+    transition: 0.2s ease;
+  }
+  img {
+    margin-bottom: 0.5rem;
+    border-radius: 12px;
+    width: 100%;
+  }
+  a {
+    display: block;
+  }
+  a:hover h4,
+  a:hover .date {
+    color: rgb(var(--accent));
+  }
+  a:hover img {
+    box-shadow: var(--box-shadow);
+  }
+
+  .title {
+    margin: 0;
+    color: rgb(var(--black));
+    line-height: 1;
+    text-wrap: balance;
+  }
+  .date {
+    margin: 0;
+    color: rgb(var(--gray));
+  }
+</style>
+
+<a href={`/blog/${post.slug}/`}>
+  <img width={720} height={360} src={post.data.heroImage} alt="" />
+  <h4 class="title">{post.data.title}</h4>
+  <p class="date">
+    <FormattedDate date={post.data.pubDate} />
+  </p>
+</a>
