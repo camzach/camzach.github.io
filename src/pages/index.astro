@@ -9,6 +9,8 @@ import FormattedDate from "../components/FormattedDate.astro";
 const latestPost = (await getCollection("blog")).reduce((a, b) =>
   a.data.pubDate > b.data.pubDate ? a : b
 );
+const projects = await getCollection("portfolio");
+const randomProject = projects.at(Math.random() * projects.length);
 ---
 
 <!doctype html>
@@ -53,9 +55,13 @@ const latestPost = (await getCollection("blog")).reduce((a, b) =>
     <main>
       <h1>Hey there!</h1>
       <p>
-        Welcome to my portfolio / blog / dumpster. This is where I'll post
-        things that I'm learning, working on, or just plain proud of. Why not
-        get started with my latest blog post?
+        Welcome to my portfolio / blog. This is where I'll post things that I'm
+        learning, working on, or just plain proud of. Below is my latest <a
+          href="/blog">blog</a
+        >
+        post. If you're interested, please check out my <a href="/portfolio"
+          >portfolio</a
+        > as well!
       </p>
       <div class="latest-post">
         <a href={`/blog/${latestPost.slug}/`}>

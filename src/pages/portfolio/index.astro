@@ -1,0 +1,86 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import { getCollection } from "astro:content";
+
+const content = await getCollection("portfolio");
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      main {
+        width: 960px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: 175px;
+        gap: 2em;
+      }
+
+      .content-item {
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+        color: inherit;
+        background-color: #4158d0;
+        background-image: linear-gradient(
+          var(--angle),
+          #4158d0 0%,
+          #c850c0 46%,
+          #ffcc70 100%
+        );
+
+        & > .info {
+          position: absolute;
+          background-color: rgba(var(--gray-light), 75%);
+          padding: 0.5em;
+          top: 75%;
+          height: 100%;
+          width: 100%;
+          transition: top 0.2s;
+          pointer-events: none;
+
+          & > .title {
+            margin-inline: auto;
+          }
+        }
+        &:hover > .info {
+          top: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <section>
+        <div class="grid">
+          {
+            content.map((item) => (
+              <a
+                style={`--angle: ${Math.random() * 360}deg`}
+                class="content-item"
+                href={`/portfolio/${item.slug}`}
+              >
+                {item.data.banner && <img src={item.data.banner} />}
+
+                <div class="info">
+                  <span class="title">{item.data.title}</span>
+                  <p>{item.data.description}</p>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>

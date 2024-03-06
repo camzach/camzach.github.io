@@ -2,7 +2,7 @@
 title: How Fast Can I Read One Billion Rows?
 description: Completing the 1BRC Challenge with Rust
 pubDate: 2/29/2024
-heroImage: /1brc.png
+heroImage: /blog/1brc.png
 ---
 
 On January 1 2024, Gunnar Morling issued the One Billion Rows Challenge: how quickly can you read one billion rows from a text file and do some simple processing on them? The challenge was intended to be completed in Java, but I decied to take it as an opportunity to get some experience with paralellism in Rust.

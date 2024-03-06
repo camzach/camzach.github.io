@@ -2,7 +2,7 @@
 title: Solving Sudoku Puzzles with Rust
 description: Getting some hands-on experience with Rust by implementing an extensible sudoku solving engine
 pubDate: 1/21/2024
-heroImage: /rust-sudoku.png
+heroImage: /blog/rust-sudoku.png
 ---
 I've always enjoyed solving pen-and-paper logic puzzles. However, Sudoku didn't truly captivate me until I discovered the [Cracking the Cryptic YouTube channel](https://www.youtube.com/c/CrackingTheCryptic). The hosts, Mark and Simon, are incredibly skilled and their content introduced me to advanced techniques for tackling challenging Sudoku puzzles. This includes everything from relatively simple strategies like hidden pairs and box/line reduction to more complex ones like x-wings and swordfish. I also discovered the fascinating world of Sudoku _variants_, which introduce additional constraints, such as anti-knight Sudoku and killer Sudoku.
 
