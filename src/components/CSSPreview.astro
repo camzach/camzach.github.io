@@ -1,0 +1,97 @@
+---
+import { format } from "prettier";
+import { compileString } from "sass";
+
+type Props = {
+  sheets?: Record<string, string>;
+  scripts?: Record<string, string>;
+};
+const { sheets = {}, scripts = {} } = Astro.props;
+const style = `<style>${Object.values(sheets)
+  .map((sheet) => compileString(sheet).css)
+  .join("\n")}</style>`;
+const script = Object.values(scripts)
+  .map((script) => `<script>${script}</script>`)
+  .join("\n");
+const html = (await Astro.slots.render("default")) ?? "";
+const formattedHTML = await format(html.trim(), { parser: "html" });
+---
+
+<style lang="scss">
+  .wrapper {
+    border-radius: 1em;
+    display: grid;
+    gap: 1em;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    outline: 1px solid black;
+    padding: 1em;
+    height: 20em;
+  }
+  form {
+    grid-column: 1/-1;
+    display: flex;
+  }
+  iframe {
+    border-radius: 0.5em;
+    box-shadow: 4px 4px 5px;
+    height: 100%;
+    width: 100%;
+  }
+  pre {
+    border-radius: 0.5em;
+    box-shadow: 4px 4px 5px;
+    display: none;
+    outline: 2px solid black;
+    margin: 0;
+    padding: 1em;
+    font-size: 1rem;
+    font-family: monospace;
+    overflow: scroll;
+    white-space: normal;
+  }
+  code {
+    white-space: pre;
+  }
+  .wrapper:has(input[value="html"]:checked) .html {
+    display: initial;
+  }
+
+  @for $n from 1 to 100 {
+    .wrapper:has(input[value="sheet-#{$n}"]:checked) .sheet-#{$n} {
+      display: initial;
+    }
+  }
+</style>
+
+<div class="wrapper">
+  <form>
+    <label>
+      <input type="radio" name="view" value="html" checked />
+      HTML
+    </label>
+    {
+      Object.keys(sheets)
+        .reverse()
+        .map((sheet, i) => (
+          <label>
+            <input type="radio" name="view" value={`sheet-${i + 1}`} />
+            {sheet}
+          </label>
+        ))
+    }
+  </form>
+  {
+    Promise.all(
+      Object.values(sheets)
+        .reverse()
+        .map(async (sheet, i) => (
+          <pre class={`sheet-${i + 1}`}>
+            <code>{await format(sheet, { parser: "scss" })}</code>
+          </pre>
+        ))
+    )
+  }
+  <pre class="html"><code>{formattedHTML}</code></pre>
+  <iframe srcdoc={style + html + script}></iframe>
+</div>

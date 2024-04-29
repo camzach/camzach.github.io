@@ -1,0 +1,283 @@
+---
+title: Rolling Dice with Pure CSS
+description: stuff
+pubDate: 4/27/2024
+heroImage: '/blog/css-dice.png'
+---
+
+import CSSPreview from "../../../components/CSSPreview.astro";
+
+
+I love board games. My favorites are those that demand careful plotting
+of plans two or three turns ahead. Like writing software, I find these
+games scratch a certain itch -- they demand that you understand their
+rules, then work within them to accomplish a goal, ideally better, faster,
+and more efficiently than your opponents. Excelling at a really crunchy
+cube-pushing eurogame can make you feel like a strategic mastermind.
+
+Without something standing in your way though, the victory would feel hollow.
+Most obviously, this pressure comes from other players trying to be a better
+mediterranean textile trader, starfaring spice hauler, or stock-trading railroad
+tycoon than you. But many games derive a significant amount of pressure from the
+inclusion of randomness. Bad luck lays waste to even the bast-crafted plans.
+
+Perhaps the most iconic symbol of randomness in all of gaming is the humble die,
+a component perhaps as old as games themselves. The nickname "knucklebones" comes
+from ancient dice that were in fact just that -- the knucklebones of animals,
+used for games as far back as 5000 BCE.
+
+So when I started work on [BBLO](/portfolio/bblo), my pet project for managing a Blood Bowl league I
+run for my friends, I just _had_ to show the die rolls on screen. A random number
+handed down to you by a server doesn't feel great, but if you slap that number on a
+fun spinning cube, suddenly it's a _game_.
+
+You've probably seen a cube in CSS already. If you haven't you might be surprised to
+learn that CSS actually natively supports 3D.
+
+export const cube = `
+.die {
+  transform-style: preserve-3d;
+  height: 3em;
+  aspect-ratio: 1;
+  transform: rotateX(-30deg) rotateY(45deg);
+  position: relative;
+  margin: 2em;
+}
+
+.die div {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.up {
+  background-color: red;
+  transform: rotateX(90deg) translateZ(1.5em);
+}
+.down {
+  background-color: orange;
+  transform: rotateX(-90deg) translateZ(1.5em);
+}
+.left {
+  background-color: yellow;
+  transform: rotateY(-90deg) translateZ(1.5em);
+}
+.right {
+  background-color: green;
+  transform: rotateY(90deg) translateZ(1.5em);
+}
+.front {
+  background-color: blue;
+  transform: translateZ(1.5em);
+}
+.back {
+  background-color: purple;
+  transform: rotateY(180deg) translateZ(1.5em);
+}`;
+
+<CSSPreview
+sheets={{cube}}>
+<div class="die">
+  <div class="up"></div>
+  <div class="down"></div>
+  <div class="front"></div>
+  <div class="back"></div>
+  <div class="left"></div>
+  <div class="right"></div>
+</div>
+</CSSPreview>
+
+And with a bit of help from wikimedia commons, we can turn the cube into a die quite easily.
+
+export const die = `
+.die div {
+  background-color: white;
+  background-size: contain;
+}
+.up {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/40/U%2B2680.svg');
+  transform: rotateX(90deg) translateZ(1.5em);
+}
+.down {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/b/be/U%2B2683.svg');
+  transform: rotateX(-90deg) translateZ(1.5em);
+}
+.left {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/a/af/U%2B2682.svg');
+  transform: rotateY(-90deg) translateZ(1.5em);
+}
+.right {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/16/U%2B2681.svg');
+  transform: rotateY(90deg) translateZ(1.5em);
+}
+.front {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/8/82/U%2B2685.svg');
+  transform: translateZ(1.5em);
+}
+.back {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/42/U%2B2684.svg');
+  transform: rotateY(180deg) translateZ(1.5em);
+}`;
+
+<CSSPreview sheets={{ cube, die }}>
+<div class="die">
+  <div class="up"></div>
+  <div class="down"></div>
+  <div class="front"></div>
+  <div class="back"></div>
+  <div class="left"></div>
+  <div class="right"></div>
+</div>
+</CSSPreview>
+
+Displaying any one particular face of the die is easy: just change the 
+transform on the `<div class="die">` to rotate the desired face into view.
+We can even apply a `transition` to the rotation to animate it for free! In
+my app, I used JavaScript to change a `data-roll` attribute on the die to
+determine which face is showing, but in the example below I'm using the CSS
+`:has()` selector to keep this blog post HTML-only.
+
+export const animation1 = `
+.die {
+  transition: transform 0.5s linear;
+}
+@keyframes spin {
+ 0% {
+  transform: rotate3d(1,1,1,0deg);
+ }
+ 100% {
+  transform: rotate3d(1,1,1,360deg);
+ }
+}
+
+body:has(input[value="idle"]:checked) .die {
+  animation: spin 2s linear infinite;
+}
+body:has(input[value="1"]:checked) .die {
+  transform: rotateX(-90deg);
+}
+body:has(input[value="2"]:checked) .die {
+  transform: rotateY(-90deg);
+}
+body:has(input[value="3"]:checked) .die {
+  transform: rotateY(90deg);
+}
+body:has(input[value="4"]:checked) .die {
+  transform: rotateX(90deg);
+}
+body:has(input[value="5"]:checked) .die {
+  transform: rotateX(180deg);
+}
+body:has(input[value="6"]:checked) .die {
+  transform: rotateX(0);
+}`;
+
+<CSSPreview sheets={{cube,die,animation: animation1}}>
+<div class="die">
+  <div class="up"></div>
+  <div class="down"></div>
+  <div class="front"></div>
+  <div class="back"></div>
+  <div class="left"></div>
+  <div class="right"></div>
+</div>
+<form >
+  <label><input name="roll" type="radio" value="none" checked/>None</label>
+  <label><input name="roll" type="radio" value="idle"/>idle</label>
+  <label><input name="roll" type="radio" value={1} />1</label>
+  <label><input name="roll" type="radio" value={2} />2</label>
+  <label><input name="roll" type="radio" value={3} />3</label>
+  <label><input name="roll" type="radio" value={4} />4</label>
+  <label><input name="roll" type="radio" value={5} />5</label>
+  <label><input name="roll" type="radio" value={6} />6</label>
+</form>
+</CSSPreview>
+
+In the above example, you'll probably notice that while the die is able to 
+roll smoothly between any of the numbered states, the transition between the
+"None" state and a numbered state is funky, sometimes jumping directly to the
+number, sometiemes freezing the animation teporarily. That's because the CSS
+`animation` and `transition` properties work on completely different systems.
+An `animation` is time-driven, whie a `transition` is state-driven. To settle
+the difference we'll have to pick either one or the other.
+
+For me, the solutionw as to drop `transition` and create new animation keyframes for
+each roll. While this doesn't help to animate neatly between consecutive rolls, it
+does provide the benefit of allowing a more dynamic effect on each roll. Just for fun,
+I added a "halfway-point" to the animation so the die looks more like it's really rolling.
+
+I'm using SASS here just
+to reduce the amount of CSS I have to type up, but there's no reason this couldn't be
+done manually. It would just be very repetitive. If you're unfamiliar with SASS the
+code may seem a bit strange, but it should still be understandable.
+
+export const animation2 = `
+@use "sass:list";
+
+@keyframes idle {
+ 0% {
+  transform: rotate3d(1,1,1,0deg);
+ }
+ 100% {
+  transform: rotate3d(1,1,1,360deg);
+ }
+}
+body:has(input[value="idle"]:checked) .die {
+  animation: idle 2s linear infinite;
+}
+$dieFaces: (
+  rotateX(-90deg),
+  rotateY(-90deg),
+  rotateY(90deg),
+  rotateX(90deg),
+  rotateX(180deg),
+  rotateX(0),
+);
+@for $n from 1 through 6 {
+  @keyframes roll#{$n} {
+    0% {
+      transform: rotateX(-30deg) rotateY(45deg);
+    }
+    50% {
+      transform: rotate3d(-2,4,-0.4, -832deg);
+    }
+
+    100% {
+      transform: #{list.nth($dieFaces, $n)};
+    }
+  }
+  body:has(input[value="#{$n}"]:checked) .die {
+    animation: roll#{$n} 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    animation-fill-mode: forwards;
+  }
+}
+`;
+
+<CSSPreview sheets={{cube, die, animation: animation2}}>
+<div class="die">
+  <div class="up"></div>
+  <div class="down"></div>
+  <div class="front"></div>
+  <div class="back"></div>
+  <div class="left"></div>
+  <div class="right"></div>
+</div>
+<form >
+  <label><input name="roll" type="radio" value="none" checked/>none</label>
+  <label><input name="roll" type="radio" value="idle"/>idle</label>
+  <label><input name="roll" type="radio" value={1} />1</label>
+  <label><input name="roll" type="radio" value={2} />2</label>
+  <label><input name="roll" type="radio" value={3} />3</label>
+  <label><input name="roll" type="radio" value={4} />4</label>
+  <label><input name="roll" type="radio" value={5} />5</label>
+  <label><input name="roll" type="radio" value={6} />6</label>
+</form>
+</CSSPreview>
+
+And that's just about everything! All that was left to do was wrap this mess up
+into a reusable component and sprinkle it around my app wherever a random number
+was used. The simple appearance of a die goes a long way to assure players that 
+the random number is fair, and that I haven't  written any unfair advantages
+into the software to give myself a leg up. Or have I? No, I definitely haven't.
+
+Not that I'd tell anybody if I did 😈
