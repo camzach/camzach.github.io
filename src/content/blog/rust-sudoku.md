@@ -54,7 +54,7 @@ At this point, the program can solve most basic Sudoku puzzles. However, my aim 
 
 The backtracker searches for the cell with the fewest possible candidates and tries each possibility one by one. Here's the pseudocode representing the backtracking logic:
 
-```pseudocode
+```
 Make a backup of the current grid
 Find cell with fewest candidates
 For each candidate:

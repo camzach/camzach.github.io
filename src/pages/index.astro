@@ -10,7 +10,6 @@ const latestPost = (await getCollection("blog")).reduce((a, b) =>
   a.data.pubDate > b.data.pubDate ? a : b
 );
 const projects = await getCollection("portfolio");
-const randomProject = projects.at(Math.random() * projects.length);
 ---
 
 <!doctype html>
