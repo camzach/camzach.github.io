@@ -20,6 +20,7 @@ const portfolio = defineCollection({
     description: z.string(),
     banner: z.string(),
     showcase: z.string().optional(),
+    repo: z.string(),
   }),
 });
 

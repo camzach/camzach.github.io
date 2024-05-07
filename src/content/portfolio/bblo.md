@@ -3,6 +3,7 @@ title: BBLO
 description: Site for managing a Blood Bowl league
 banner: /portfolio/bblo/bored-goblin.png
 showcase: /portfolio/bblo/showcase.png
+repo: https://github.com/camzach/blood-bowl-league-organizer
 ---
 
 ## Summary

@@ -3,6 +3,7 @@ title: Pixcel Worksheets
 description: Self-grading assments for elementary school classrooms
 banner: /portfolio/pixcel/pixcel-flower.png
 showcase: /portfolio/pixcel/showcase.png
+repo: https://github.com/camzach/pixcel-worksheets
 ---
 
 ## Summary

@@ -3,6 +3,7 @@ title: TI Cartotheque
 description: A map library for Twilight Imperium
 banner: /portfolio/ti-cartotheque/banner.png
 showcase: /portfolio/ti-cartotheque/showcase.png
+repo: https://github.com/camzach/ti-cartotheque
 ---
 
 ## Summary

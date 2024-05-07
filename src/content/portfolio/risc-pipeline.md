@@ -3,6 +3,7 @@ title: RISC CPU Architecture
 description: VHDL Description of a 5-stage pipelined CPU
 banner: /portfolio/risc-pipeline/diagram.png
 showcase: /portfolio/risc-pipeline/diagram.png
+repo: https://github.com/camzach/risc-pipeline
 ---
 
 I created this project as part of my M.S. in the spring of 2021. The intent was to learn about the low-level architecture of a computer processor by designing one myself with VHDL. In addition to the description of the processor architecture, I created an instruction set and a simple assembler that would compile a program to machine code, to be loaded into the processor's memory and executed.
