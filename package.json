@@ -15,7 +15,10 @@
     "@astrojs/rss": "^4.0.2",
     "@astrojs/sitemap": "^3.0.5",
     "astro": "^4.2.1",
+    "katex": "^0.16.11",
     "prettier": "^3.2.5",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
     "typescript": "^5.3.3"
   },
   "devDependencies": {
