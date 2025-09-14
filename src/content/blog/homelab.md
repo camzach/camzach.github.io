@@ -43,4 +43,4 @@ Recently I have been experimenting with Cloudflare Tunnels to expose services wi
 
 The key takeaway from this project was that the best automation is the kind you forget exists. The automation has held up remarkably well as I have scaled from a handful of services to dozens. The only time I need to think about networking anymore is when I'm adding the initial labels to a new container. Everything else just works.
 
-The Dell OptiPlex is still working wihout issue. I have upgraded it here and there - more memory, an old video card for hardware transcoding - but it's been rock solid. It's always nice to repurpose old hardware to do something new and genuinely useful.
+The Dell OptiPlex is still working without issue. I have upgraded it here and there - more memory, an old video card for hardware transcoding - but it's been rock solid. It's always nice to repurpose old hardware to do something new and genuinely useful.
